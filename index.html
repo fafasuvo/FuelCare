@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Manager App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6fa;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #app {
+            width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .menu {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+        }
+        .start-btn {
+            background-color: #4885ed;
+            color: white;
+        }
+        .quit-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .panel {
+            display: none;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+        }
+        .result {
+            font-size: 18px;
+            color: #3c8f48;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="title">Car Manager App</div>
+    <div class="menu">
+        <button class="start-btn" onclick="showPanel('kmCalculator')">Kilometers Per Liter Calculator</button>
+        <button class="start-btn" onclick="showPanel('routeCalculator')">Route Fuel Consumption Calculator</button>
+        <button class="quit-btn" onclick="quitApp()">Quit</button>
+    </div>
+    
+    <div id="kmCalculator" class="panel">
+        <h3>Kilometers Per Liter Calculator</h3>
+        <div class="input-group">
+            <label for="kmDriven">Kilometers Driven:</label>
+            <input type="number" id="kmDriven">
+        </div>
+        <div class="input-group">
+            <label for="litersUsed">Liters Used:</label>
+            <input type="number" id="litersUsed">
+        </div>
+        <div class="input-group">
+            <label for="carType">Select Car:</label>
+            <select id="carType">
+                <option value="hiace">Toyota Hiace</option>
+                <option value="urvan">Nissan Urvan</option>
+            </select>
+        </div>
+        <button onclick="calculateKmPerLiter()">Calculate</button>
+        <div id="kmResult" class="result"></div>
+    </div>
+
+    <div id="routeCalculator" class="panel">
+        <h3>Route Fuel Consumption Calculator</h3>
+        <div class="input-group">
+            <label>Starting Location: MMCL</label>
+        </div>
+        <div class="input-group">
+            <label for="destination">Select Destination:</label>
+            <select id="destination">
+                <option value="21">San Pedro (21 km)</option>
+                <option value="11">Sta Rosa (11 km)</option>
+                <option value="9.3">Cabuyao (9.3 km)</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="routeCarType">Select Car:</label>
+            <select id="routeCarType">
+                <option value="hiace">Toyota Hiace</option>
+                <option value="urvan">Nissan Urvan</option>
+            </select>
+        </div>
+        <button onclick="calculateRouteFuelConsumption()">Calculate</button>
+        <div id="routeResult" class="result"></div>
+    </div>
+</div>
+
+<script>
+    function showPanel(panelId) {
+        document.querySelectorAll('.panel').forEach(panel => panel.style.display = 'none');
+        document.getElementById(panelId).style.display = 'block';
+    }
+
+    function calculateKmPerLiter() {
+        const kmDriven = parseFloat(document.getElementById('kmDriven').value);
+        const litersUsed = parseFloat(document.getElementById('litersUsed').value);
+        const carType = document.getElementById('carType').value;
+
+        if (isNaN(kmDriven) || isNaN(litersUsed) || litersUsed <= 0) {
+            document.getElementById('kmResult').textContent = "Please enter valid numbers.";
+            return;
+        }
+
+        let kmPerLiter = kmDriven / litersUsed;
+        document.getElementById('kmResult').textContent = `Kilometers per Liter for ${carType === 'hiace' ? 'Toyota Hiace' : 'Nissan Urvan'}: ${kmPerLiter.toFixed(2)}`;
+    }
+
+    function calculateRouteFuelConsumption() {
+        const destinationDistance = parseFloat(document.getElementById('destination').value);
+        const carType = document.getElementById('routeCarType').value;
+
+        let consumptionRate = carType === 'hiace' ? 8 : 10;
+        let fuelConsumption = destinationDistance / consumptionRate;
+
+        document.getElementById('routeResult').textContent = `Fuel Consumption to destination: ${fuelConsumption.toFixed(2)} liters`;
+    }
+
+    function quitApp() {
+        alert("Thank you for using Car Manager App!");
+    }
+</script>
+
+</body>
+</html>

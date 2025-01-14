@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fuel Care</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&family=Pacifico&display=swap');
+
         body {
             font-family: 'Arial', sans-serif;
             background-color: #fdfdf6;
@@ -15,25 +17,51 @@
             height: 100vh;
             color: #333;
         }
+
         #app {
             width: 600px;
             background-color: #ffffff;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            border: 2px solid #ffe5d9; /* Cream accent */
+            border: 2px solid #ffe5d9;
         }
+
         .title {
-            font-size: 28px;
-            font-weight: bold;
+            font-family: 'Pacifico', cursive;
+            font-size: 40px;
             text-align: center;
             margin-bottom: 30px;
-            color: #5a5a5a;
+            background: linear-gradient(90deg, #f4a261, #e76f51);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
         }
+
+        .title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #f4a261;
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            text-align: center;
+            color: #5a5a5a;
+            margin-bottom: 30px;
+        }
+
         .menu {
             text-align: center;
             margin-bottom: 30px;
         }
+
         button {
             padding: 14px 30px;
             font-size: 16px;
@@ -43,36 +71,44 @@
             border-radius: 6px;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         .start-btn {
-            background-color: #f4a261; /* Cream-like button color */
+            background-color: #f4a261;
             color: white;
         }
+
         .start-btn:hover {
             background-color: #e76f51;
             transform: scale(1.05);
         }
+
         .quit-btn {
             background-color: #e63946;
             color: white;
         }
+
         .quit-btn:hover {
             background-color: #9b2226;
             transform: scale(1.05);
         }
+
         .panel {
             display: none;
             text-align: center;
         }
+
         .input-group {
             margin-bottom: 20px;
             text-align: left;
         }
+
         label {
             font-weight: bold;
             display: block;
             margin-bottom: 5px;
             color: #666;
         }
+
         input, select {
             width: 100%;
             padding: 12px;
@@ -80,13 +116,15 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 14px;
-            background-color: #fff9f0; /* Light cream input background */
+            background-color: #fff9f0;
         }
+
         input:focus, select:focus {
             outline: none;
             border-color: #f4a261;
             box-shadow: 0 0 5px rgba(244, 162, 97, 0.5);
         }
+
         .result {
             font-size: 18px;
             color: #2a9d8f;
@@ -98,6 +136,7 @@
 
 <div id="app">
     <div class="title">Fuel Care</div>
+    <div class="subtitle">Optimize your vehicle's fuel efficiency</div>
     <div class="menu">
         <button class="start-btn" onclick="showPanel('kmCalculator')">Kilometers Per Liter Calculator</button>
         <button class="start-btn" onclick="showPanel('routeCalculator')">Route Fuel Consumption Calculator</button>
@@ -120,6 +159,8 @@
                 <option value="hiace">Toyota Hiace</option>
                 <option value="urvan">Nissan Urvan</option>
                 <option value="l300">Mitsubishi L300</option>
+                <option value="h100">Hyundai H100</option>
+                <option value="ivan">Isuzu I-van</option>
             </select>
         </div>
         <button onclick="calculateKmPerLiter()">Calculate</button>
@@ -137,6 +178,7 @@
                 <option value="21">San Pedro (21 km)</option>
                 <option value="11">Sta Rosa (11 km)</option>
                 <option value="9.3">Cabuyao (9.3 km)</option>
+                <option value="12">Carmona (12 km)</option> <!-- Added Carmona option -->
             </select>
         </div>
         <div class="input-group">
@@ -145,6 +187,8 @@
                 <option value="hiace">Toyota Hiace</option>
                 <option value="urvan">Nissan Urvan</option>
                 <option value="l300">Mitsubishi L300</option>
+                <option value="h100">Hyundai H100</option>
+                <option value="ivan">Isuzu I-van</option>
             </select>
         </div>
         <button onclick="calculateRouteFuelConsumption()">Calculate</button>
@@ -169,7 +213,10 @@
         }
 
         let kmPerLiter = kmDriven / litersUsed;
-        const carName = carType === 'hiace' ? 'Toyota Hiace' : carType === 'urvan' ? 'Nissan Urvan' : 'Mitsubishi L300';
+        const carName = carType === 'hiace' ? 'Toyota Hiace' :
+                        carType === 'urvan' ? 'Nissan Urvan' :
+                        carType === 'l300' ? 'Mitsubishi L300' :
+                        carType === 'h100' ? 'Hyundai H100' : 'Isuzu I-van';
         document.getElementById('kmResult').textContent = `Kilometers per Liter for ${carName}: ${kmPerLiter.toFixed(2)}`;
     }
 
@@ -177,10 +224,13 @@
         const destinationDistance = parseFloat(document.getElementById('destination').value);
         const carType = document.getElementById('routeCarType').value;
 
-        const consumptionRates = { hiace: 8, urvan: 10, l300: 9 };
+        const consumptionRates = { hiace: 8, urvan: 10, l300: 9, h100: 11, ivan: 10 };
         const fuelConsumption = destinationDistance / consumptionRates[carType];
 
-        const carName = carType === 'hiace' ? 'Toyota Hiace' : carType === 'urvan' ? 'Nissan Urvan' : 'Mitsubishi L300';
+        const carName = carType === 'hiace' ? 'Toyota Hiace' :
+                        carType === 'urvan' ? 'Nissan Urvan' :
+                        carType === 'l300' ? 'Mitsubishi L300' :
+                        carType === 'h100' ? 'Hyundai H100' : 'Isuzu I-van';
         document.getElementById('routeResult').textContent = `Fuel Consumption for ${carName}: ${fuelConsumption.toFixed(2)} liters`;
     }
 

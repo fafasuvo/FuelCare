@@ -6,62 +6,91 @@
     <title>Fuel Care</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #e6e6fa;
+            font-family: 'Arial', sans-serif;
+            background-color: #fdfdf6;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            color: #333;
         }
         #app {
             width: 600px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            border: 2px solid #ffe5d9; /* Cream accent */
         }
         .title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            color: #5a5a5a;
         }
         .menu {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         button {
-            padding: 10px 20px;
+            padding: 14px 30px;
             font-size: 16px;
             cursor: pointer;
-            margin: 5px;
+            margin: 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .start-btn {
-            background-color: #4885ed;
+            background-color: #f4a261; /* Cream-like button color */
             color: white;
         }
+        .start-btn:hover {
+            background-color: #e76f51;
+            transform: scale(1.05);
+        }
         .quit-btn {
-            background-color: #dc3545;
+            background-color: #e63946;
             color: white;
+        }
+        .quit-btn:hover {
+            background-color: #9b2226;
+            transform: scale(1.05);
         }
         .panel {
             display: none;
             text-align: center;
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
         }
         label {
             font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #fff9f0; /* Light cream input background */
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #f4a261;
+            box-shadow: 0 0 5px rgba(244, 162, 97, 0.5);
         }
         .result {
             font-size: 18px;
-            color: #3c8f48;
-            margin-top: 15px;
+            color: #2a9d8f;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -90,6 +119,7 @@
             <select id="carType">
                 <option value="hiace">Toyota Hiace</option>
                 <option value="urvan">Nissan Urvan</option>
+                <option value="l300">Mitsubishi L300</option>
             </select>
         </div>
         <button onclick="calculateKmPerLiter()">Calculate</button>
@@ -114,6 +144,7 @@
             <select id="routeCarType">
                 <option value="hiace">Toyota Hiace</option>
                 <option value="urvan">Nissan Urvan</option>
+                <option value="l300">Mitsubishi L300</option>
             </select>
         </div>
         <button onclick="calculateRouteFuelConsumption()">Calculate</button>
@@ -138,17 +169,19 @@
         }
 
         let kmPerLiter = kmDriven / litersUsed;
-        document.getElementById('kmResult').textContent = `Kilometers per Liter for ${carType === 'hiace' ? 'Toyota Hiace' : 'Nissan Urvan'}: ${kmPerLiter.toFixed(2)}`;
+        const carName = carType === 'hiace' ? 'Toyota Hiace' : carType === 'urvan' ? 'Nissan Urvan' : 'Mitsubishi L300';
+        document.getElementById('kmResult').textContent = `Kilometers per Liter for ${carName}: ${kmPerLiter.toFixed(2)}`;
     }
 
     function calculateRouteFuelConsumption() {
         const destinationDistance = parseFloat(document.getElementById('destination').value);
         const carType = document.getElementById('routeCarType').value;
 
-        let consumptionRate = carType === 'hiace' ? 8 : 10;
-        let fuelConsumption = destinationDistance / consumptionRate;
+        const consumptionRates = { hiace: 8, urvan: 10, l300: 9 };
+        const fuelConsumption = destinationDistance / consumptionRates[carType];
 
-        document.getElementById('routeResult').textContent = `Fuel Consumption to destination: ${fuelConsumption.toFixed(2)} liters`;
+        const carName = carType === 'hiace' ? 'Toyota Hiace' : carType === 'urvan' ? 'Nissan Urvan' : 'Mitsubishi L300';
+        document.getElementById('routeResult').textContent = `Fuel Consumption for ${carName}: ${fuelConsumption.toFixed(2)} liters`;
     }
 
     function quitApp() {

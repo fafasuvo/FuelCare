@@ -11,15 +11,12 @@
             font-family: 'Arial', sans-serif;
             background-color: #fdfdf6;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             color: #333;
         }
 
         #app {
-            width: 600px;
+            max-width: 600px;
+            margin: auto;
             background-color: #ffffff;
             padding: 25px;
             border-radius: 12px;
@@ -27,11 +24,20 @@
             border: 2px solid #ffe5d9;
         }
 
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: #ffffff;
+            z-index: 1000;
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 2px solid #ffe5d9;
+        }
+
         .title {
             font-family: 'Pacifico', cursive;
             font-size: 40px;
-            text-align: center;
-            margin-bottom: 30px;
+            margin: 0;
             background: linear-gradient(90deg, #f4a261, #e76f51);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -54,7 +60,7 @@
             font-weight: 300;
             text-align: center;
             color: #5a5a5a;
-            margin-bottom: 30px;
+            margin: 30px 0;
         }
 
         .menu {
@@ -130,37 +136,51 @@
             color: #2a9d8f;
             margin-top: 20px;
         }
+
+        .instructions {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: #333;
+        }
     </style>
 </head>
 <body>
 
-<div id="app">
-    <div class="title">Fuel Care</div>
-    <div class="subtitle">Optimize your vehicle's fuel efficiency</div>
-    <div class="menu">
-        <button class="start-btn" onclick="showPanel('kmCalculator')">Kilometers Per Liter Calculator</button>
-        <button class="start-btn" onclick="showPanel('routeCalculator')">Route Fuel Consumption Calculator</button>
-        <button class="quit-btn" onclick="quitApp()">Quit</button>
-    </div>
+    <div id="app">
+        <div class="sticky-header">
+            <div class="title">Fuel Care</div>
+        </div>
+        <div class="subtitle">Optimize your vehicle's fuel efficiency</div>
+        <div class="menu">
+            <button class="start-btn" onclick="showPanel('kmCalculator')">Kilometers Per Liter Calculator</button>
+            <button class="start-btn" onclick="showPanel('routeCalculator')">Route Fuel Consumption Calculator</button>
+            <button class="quit-btn" onclick="quitApp()">Quit</button>
+        </div>
     
-    <div id="kmCalculator" class="panel">
-        <h3>Kilometers Per Liter Calculator</h3>
-        <div class="input-group">
-            <label for="kmDriven">Kilometers Driven:</label>
-            <input type="number" id="kmDriven">
-        </div>
-        <div class="input-group">
-            <label for="litersUsed">Liters Used:</label>
-            <input type="number" id="litersUsed">
-        </div>
-        <div class="input-group">
-            <label for="carType">Select Car:</label>
-            <select id="carType">
-                <option value="hiace">Toyota Hiace</option>
-                <option value="urvan">Nissan Urvan</option>
-                <option value="l300">Mitsubishi L300</option>
-                <option value="h100">Hyundai H100</option>
-                <option value="ivan">Isuzu I-van</option>
+        <div id="kmCalculator" class="panel">
+            <h3>Kilometers Per Liter Calculator</h3>
+            <div class="input-group">
+                <label for="kmDriven">Kilometers Driven:</label>
+                <input type="number" id="kmDriven">
+            </div>
+            <div class="input-group">
+                <label for="litersUsed">Rough Estimate Liters Used:</label>
+                <input type="number" id="litersUsed">
+            </div>
+            <div class="input-group">
+                <label for="carType">Select Car:</label>
+                <select id="carType">
+                <option value="toyotaHiace">Toyota Hiace</option>
+                <option value="nissanUrvan">Nissan Urvan</option>
+                <option value="mitsubishiL300">Mitsubishi L300</option>
+                <option value="hyundaiH100">Hyundai H-100</option>
+                <option value="isuzuIvan">Isuzu I-van</option>
+                <option value="fotonTransvan">Foton Transvan</option>
             </select>
         </div>
         <button onclick="calculateKmPerLiter()">Calculate</button>
@@ -176,23 +196,36 @@
             <label for="destination">Select Destination:</label>
             <select id="destination">
                 <option value="21">San Pedro (21 km)</option>
-                <option value="11">Sta Rosa (11 km)</option>
-                <option value="9.3">Cabuyao (9.3 km)</option>
-                <option value="12">Carmona (12 km)</option> <!-- Added Carmona option -->
+                <option value="11">SM Sta Rosa (11 km)</option>
+                <option value="9.3">Balibago (9.3 km)</option>
+                <option value="12">Carmona (12 km)</option>
+                <option value="21">Pavillion (21 km)</option>
             </select>
         </div>
         <div class="input-group">
             <label for="routeCarType">Select Car:</label>
             <select id="routeCarType">
-                <option value="hiace">Toyota Hiace</option>
-                <option value="urvan">Nissan Urvan</option>
-                <option value="l300">Mitsubishi L300</option>
-                <option value="h100">Hyundai H100</option>
-                <option value="ivan">Isuzu I-van</option>
+                <option value="toyotaHiace">Toyota Hiace</option>
+                <option value="nissanUrvan">Nissan Urvan</option>
+                <option value="mitsubishiL300">Mitsubishi L300</option>
+                <option value="hyundaiH100">Hyundai H-100</option>
+                <option value="isuzuIvan">Isuzu I-van</option>
+                <option value="fotonTransvan">Foton Transvan</option>
             </select>
         </div>
         <button onclick="calculateRouteFuelConsumption()">Calculate</button>
         <div id="routeResult" class="result"></div>
+    </div>
+
+    <div class="instructions">
+        <h3>How to Use</h3>
+        <ul>
+            <li><b>Select a Calculator:</b> Choose either the "Kilometers Per Liter Calculator" or "Route Fuel Consumption Calculator" from the menu.</li>
+            <li><b>Enter Data:</b> Input the required values, such as kilometers driven, liters used, or destination distance.</li>
+            <li><b>Select Your Car:</b> Pick your car model from the dropdown menu to ensure accurate calculations.</li>
+            <li><b>Calculate:</b> Click the "Calculate" button to see the results.</li>
+            <li><b>Quit:</b> Use the "Quit" button to exit the program.</li>
+        </ul>
     </div>
 </div>
 
@@ -212,31 +245,58 @@
             return;
         }
 
+        const carNames = {
+            toyotaHiace: 'Toyota Hiace',
+            nissanUrvan: 'Nissan Urvan',
+            mitsubishiL300: 'Mitsubishi L300',
+            hyundaiH100: 'Hyundai H-100',
+            isuzuIvan: 'Isuzu I-van',
+            fotonTransvan: 'Foton Transvan'
+        };
+
+        const consumptionRates = {
+            toyotaHiace: 10,  // Average of 8-12
+            nissanUrvan: 11, // Average of 10-12
+            mitsubishiL300: 13.5, // Average of 12-15
+            hyundaiH100: 13, // Average of 12-14
+            isuzuIvan: 11, // Average of 10-12
+            fotonTransvan: 11.5 // Average of 10-13
+        };
+
         let kmPerLiter = kmDriven / litersUsed;
-        const carName = carType === 'hiace' ? 'Toyota Hiace' :
-                        carType === 'urvan' ? 'Nissan Urvan' :
-                        carType === 'l300' ? 'Mitsubishi L300' :
-                        carType === 'h100' ? 'Hyundai H100' : 'Isuzu I-van';
-        document.getElementById('kmResult').textContent = `Kilometers per Liter for ${carName}: ${kmPerLiter.toFixed(2)}`;
+        document.getElementById('kmResult').textContent = `Kilometers per Liter for ${carNames[carType]}: ${kmPerLiter.toFixed(2)}`;
     }
 
     function calculateRouteFuelConsumption() {
         const destinationDistance = parseFloat(document.getElementById('destination').value);
         const carType = document.getElementById('routeCarType').value;
 
-        const consumptionRates = { hiace: 8, urvan: 10, l300: 9, h100: 11, ivan: 10 };
-        const fuelConsumption = destinationDistance / consumptionRates[carType];
+        const consumptionRates = {
+            toyotaHiace: 10,  
+            nissanUrvan: 11, 
+            mitsubishiL300: 13.5, 
+            hyundaiH100: 13, 
+            isuzuIvan: 11, 
+            fotonTransvan: 11.5 
+        };
 
-        const carName = carType === 'hiace' ? 'Toyota Hiace' :
-                        carType === 'urvan' ? 'Nissan Urvan' :
-                        carType === 'l300' ? 'Mitsubishi L300' :
-                        carType === 'h100' ? 'Hyundai H100' : 'Isuzu I-van';
-        document.getElementById('routeResult').textContent = `Fuel Consumption for ${carName}: ${fuelConsumption.toFixed(2)} liters`;
+        const carNames = {
+            toyotaHiace: 'Toyota Hiace',
+            nissanUrvan: 'Nissan Urvan',
+            mitsubishiL300: 'Mitsubishi L300',
+            hyundaiH100: 'Hyundai H-100',
+            isuzuIvan: 'Isuzu I-van',
+            fotonTransvan: 'Foton Transvan'
+        };
+
+        let estimatedFuel = Math.ceil(destinationDistance / consumptionRates[carType]);
+        document.getElementById('routeResult').textContent = `Estimated Fuel Consumption for ${carNames[carType]}: ~${estimatedFuel} liters`;
     }
 
     function quitApp() {
         alert("Thank you for using Fuel Care!");
     }
+    
 </script>
 
 </body>
